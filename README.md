@@ -30,7 +30,6 @@
 - JWT
 
 **Tools**:-
-
 - Github
 
 ### Reason for opting this project:-
