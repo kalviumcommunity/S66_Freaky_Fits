@@ -12,7 +12,7 @@
 - Like and Comment
 - User can edit the trend
 
-- ### Tech Stack
+### Tech Stack
 
 **Frontend**:-
 
