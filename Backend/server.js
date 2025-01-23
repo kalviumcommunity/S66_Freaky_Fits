@@ -6,6 +6,6 @@ app.get("/ping",(req,res)=>{
 })
 
 const PORT=8080
-app.listen(PORT,()=>{
+app.listen(PORT,()=>
     console.log(`listening on the ${PORT}`)
-})
+)
