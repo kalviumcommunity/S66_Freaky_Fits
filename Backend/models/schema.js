@@ -3,15 +3,15 @@ const { type } = require('os')
 const userSchema=new mongoose.Schema({
     username:{
         type:String,
-        Required:true
+        required:true
     },
     email:{
         type:String,
-        Required:true
+        required:true
     },
     password:{
         type:String,
-        Required:true,
+        required:true,
     }
 })
 
