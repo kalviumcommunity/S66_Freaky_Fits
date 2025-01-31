@@ -26,14 +26,16 @@ app.post("/create",async(req,res)=>{
     }
 })
 
-const PORT=8080
-app.listen(PORT,async()=>{
+app.get("/",async(req,res)=>{
     try {
         await connection;
-        console.log("Connected to mongoDB atlas")
+        res.send("Connected to mongoDB atlas")
     } catch (error) {
-        console.log(error)
+        res.send("Database connection failed" ,error)
     }
-    
+})
+
+const PORT=8080
+app.listen(PORT,async()=>{
     console.log(`Server is running on http://localhost:${PORT}`);
 })
