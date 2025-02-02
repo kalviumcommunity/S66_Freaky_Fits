@@ -36,5 +36,6 @@
 I selected this project because it uses both witty and inventive creativity and real-world technologies. Thereby enabling me to consider a number of different elements of web development, such as user authentication database management, API development frontend design, etc. Furthermore, the fun and unusual aspect of the project will help keep my spirit high during the whole development process. By working on this, I'll gain valuable experience in building full-stack web applications and improve my skills in React, Node.js, Express, and MongoDB. Moreover, it will be interesting to build an app that presents strange fashion movements and enables interaction with it.
 
 ## <mark>Backend Deployment Link </mark>
+https://s66-freaky-fits-vpmn.onrender.com
 
 
