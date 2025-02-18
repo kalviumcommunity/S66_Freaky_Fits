@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import image from '../assets/image.png';
 
 const fashionTrends = [
   {
@@ -27,55 +28,86 @@ const fashionTrends = [
     description: "Designers have used real grass to create eco-friendly skirts, blending fashion with nature in a truly bizarre way.",
     image: "https://s.alicdn.com/@sc04/kf/HTB1DUNsa5_1gK0jSZFqq6ApaXXag.jpg_300x300.jpg",
   },
+  {
+    title: "Surreal and bizarre fashion trend",
+    description: "Surrealism influenced the fashion world immensely, generating new ideas about form, style, material, and concept. Fashion creators like Elsa Schiaparelli, John Galliano, Jan Fabre, and Martin Margiela injected Surreal notions of the bizarre and absurd into their designs.",
+    image: "https://qph.cf2.quoracdn.net/main-qimg-197ddbeb5df0457816f78ac01601e879-lq"
+  }
 ];
 
 export default function LandingPage() {
   return (
-    <div className="bg-gradient-to-r from-pink-50 to-blue-50 min-h-screen text-gray-800 font-serif">
+    <div className="relative min-h-screen font-serif bg-gradient-to-br from-pink-50 to-purple-50">
+      {/* Background Image with Overlay */}
+      <div className="absolute inset-0 opacity-20">
+        <img className="w-full h-full object-cover" src={image} alt="Background" />
+      </div>
+
       {/* Header Section */}
-      <header className="text-center py-16 bg-gradient-to-b from-blue-100 to-pink-100">
+      <header className="text-center py-24 relative z-10">
         <motion.h1
-          className="text-6xl font-bold mb-4 text-gray-900"
+          className="text-8xl font-extrabold mb-6 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent drop-shadow-lg"
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.7 }}
         >
-          Welcome to the World of Weird Fashion
+          Welcome to Weird Fashion
         </motion.h1>
-        <p className="text-lg text-gray-700 max-w-2xl mx-auto">
-          Discover the quirkiest, most unconventional fashion trends that have ever graced the runway. Dive into a realm where creativity knows no bounds, and style takes a wild turn.
-        </p>
+        <motion.p
+          className="text-2xl text-gray-700 max-w-3xl mx-auto leading-relaxed"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.3 }}
+        >
+          Explore the quirkiest, most unconventional fashion trends that redefine creativity and style.
+        </motion.p>
       </header>
 
-      {/* Introduction Section */}
-      <section className="py-16 px-10 lg:px-20">
-        <h2 className="text-4xl font-bold text-center mb-8 text-gray-900">About the Project</h2>
-        <p className="text-center text-gray-700 max-w-4xl mx-auto">
-          Our project, "List of Most Weird Fashion Trends," highlights the strange and humorous fashion statements that have captured the imagination of designers and enthusiasts. From raw meat dresses to LED-infused clothing, explore how bold ideas redefine fashion. Join us in celebrating the eccentric side of style by liking, sharing, and commenting on your favorite bizarre trends!
-        </p>
+      {/* About Section */}
+      <section className="py-20 px-10 lg:px-24 relative z-10 bg-white/80 backdrop-blur-sm">
+        <motion.h2
+          className="text-6xl font-bold text-center mb-12 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.4 }}
+        >
+          About the Project
+        </motion.h2>
+        <motion.p
+          className="text-center text-gray-700 max-w-4xl mx-auto text-xl leading-relaxed"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.5 }}
+        >
+          Our project showcases the strangest fashion statements that have captivated designers and fashion enthusiasts worldwide. Celebrate the eccentric side of style by engaging with these wild trends!
+        </motion.p>
       </section>
 
-      {/* Fashion Trends Section */}
-      <section className="py-12 bg-white">
-        <h2 className="text-4xl font-bold text-center mb-10 text-gray-900">Featured Trends</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 px-10 lg:px-20">
+      {/* Featured Trends Section */}
+      <section className="py-20 relative z-10">
+        <motion.h2
+          className="text-6xl font-bold text-center mb-16 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.6 }}
+        >
+          Featured Trends
+        </motion.h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 px-10 lg:px-24">
           {fashionTrends.map((trend, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: index * 0.2 }}
-              className="bg-gradient-to-r from-pink-100 to-blue-100 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow border border-gray-200"
+              whileHover={{ scale: 1.05 }}
+              className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all transform"
             >
-              <img
-                src={trend.image}
-                alt={trend.title}
-                className="w-full h-52 object-cover"
-              />
-              <div className="p-6">
-                <h3 className="text-2xl font-semibold mb-3 text-gray-800">{trend.title}</h3>
-                <p className="text-gray-600 text-sm mb-4">{trend.description}</p>
-                <button className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md w-full">
+              <img src={trend.image} alt={trend.title} className="w-full h-72 object-cover" />
+              <div className="p-8">
+                <h3 className="text-3xl font-bold mb-4 text-gray-800">{trend.title}</h3>
+                <p className="text-lg text-gray-700 mb-6">{trend.description}</p>
+                <button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-pink-600 hover:to-purple-600 text-white font-semibold py-3 px-6 rounded-full w-full transition-all hover:shadow-lg">
                   Learn More
                 </button>
               </div>
@@ -85,8 +117,8 @@ export default function LandingPage() {
       </section>
 
       {/* Footer Section */}
-      <footer className="text-center py-8 bg-gradient-to-t from-blue-100 to-pink-100">
-        <p className="text-gray-600">© 2025 Weird Fashion Trends. All rights reserved.</p>
+      <footer className="text-center py-12 bg-gradient-to-r from-purple-600 to-pink-600 text-white">
+        <p className="text-lg">© 2025 Weird Fashion Trends. All rights reserved.</p>
       </footer>
     </div>
   );
