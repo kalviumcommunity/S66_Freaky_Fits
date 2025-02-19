@@ -1,41 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import image from '../assets/image.png';
 
-const fashionTrends = [
-  {
-    title: "Meat Dress",
-    description: "Lady Gaga famously wore a dress made entirely of raw meat at the 2010 MTV Video Music Awards. It was a bold, bizarre statement that sparked global conversations.",
-    image: "https://www.jacksonville.com/gcdn/authoring/2011/06/16/NFTU/ghows-LK-c2a441a8-e733-41b2-b91e-26570c1b8d49-077c0f03.jpeg?width=1200&disable=upscale&format=pjpg&auto=webp",
-  },
-  {
-    title: "Bubble Wrap Dresses",
-    description: "Taking recycling to a whole new level, bubble wrap dresses became a short-lived trend that combined fashion with a playful touch.",
-    image: "https://preview.redd.it/if-dresses-were-made-only-of-bubble-wrap-v0-kqj6sx5kh2ib1.jpg?width=640&crop=smart&auto=webp&s=fb4d380d04e36986aa931bce87d935bf4477cf25",
-  },
-  {
-    title: "Extreme Platform Shoes",
-    description: "Shoes with absurdly high platforms have been seen on runways, making the wearer appear as though they are walking on stilts.",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWqdvC7ZPop7ZWFBOM0cDGR20RItz-it3c0Q&ss",
-  },
-  {
-    title: "LED Light Clothing",
-    description: "Clothing embedded with LED lights gained popularity at music festivals, turning wearers into walking light shows.",
-    image: "https://cdn.shopify.com/s/files/1/1429/5802/files/201507211840451814.jpg?v=1498083498https://via.placeholder.com/300x200?text=LED+Light+Clothing",
-  },
-  {
-    title: "Grass Skirts (Made of Real Grass)",
-    description: "Designers have used real grass to create eco-friendly skirts, blending fashion with nature in a truly bizarre way.",
-    image: "https://s.alicdn.com/@sc04/kf/HTB1DUNsa5_1gK0jSZFqq6ApaXXag.jpg_300x300.jpg",
-  },
-  {
-    title: "Surreal and bizarre fashion trend",
-    description: "Surrealism influenced the fashion world immensely, generating new ideas about form, style, material, and concept. Fashion creators like Elsa Schiaparelli, John Galliano, Jan Fabre, and Martin Margiela injected Surreal notions of the bizarre and absurd into their designs.",
-    image: "https://qph.cf2.quoracdn.net/main-qimg-197ddbeb5df0457816f78ac01601e879-lq"
-  }
-];
-
 export default function LandingPage() {
+
+  const [fashionTrends, setFashionTrends] = useState([]);
+  
+  useEffect(() => {
+    fetch('http://localhost:8080/products')
+      .then(response => response.json())
+      .then(data => {
+        console.log(data.pro); // Log the data for debugging
+        setFashionTrends(data.pro); // Updated to use data.pro
+      })
+      .catch(error => console.error('Error fetching data:', error));
+  }, []);
+  
+
   return (
     <div className="relative min-h-screen font-serif bg-gradient-to-br from-pink-50 to-purple-50">
       {/* Background Image with Overlay */}
