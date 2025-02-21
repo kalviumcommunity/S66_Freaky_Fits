@@ -1,6 +1,9 @@
 const Products = require('../models/product');
 const express = require('express');
 const proRouter = express.Router();
+const upload=require('../middlewares/upload')
+
+
 
 // GET: Retrieve all products
 proRouter.get('/products', async (req, res) => {
@@ -13,14 +16,22 @@ proRouter.get('/products', async (req, res) => {
 });
 
 // POST: Create a new product
-proRouter.post('/products', async (req, res) => {
-    try {
-        const newProduct = new Products(req.body);
-        const savedProduct = await newProduct.save();
-        res.status(201).json({ "message": "product created successfully", savedProduct });
-    } catch (error) {
-        res.status(500).json({ 'message': 'Could not create the product' });
+proRouter.post('/products', upload.single('image'),async (req, res) => {
+    const {title,description,image}=req.body;
+    console.log(title,description,image,req.body)
+    try{
+        const newProduct=new Products({
+            title: req.body.title,
+            description: req.body.description,
+            image: req.file ? req.file.path:'',
+        });
+        const savedProduct=await newProduct.save()
+        res.status(201).json({"message":"product created successfully", savedProduct})
+    }catch(error){
+        console.log(error);
+        res.status(500).json({"message":'Could not create the product',error})
     }
+
 });
 
 // PUT: Update an existing product
