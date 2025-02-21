@@ -1,5 +1,5 @@
 const mongoose=require('mongoose')
-const { type } = require('os')
+// const { type } = require('os')
 const productSchema=new mongoose.Schema({
     title:{
         type:String,
