@@ -1,41 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import image from '../assets/image.png'; // Ensure you have the image in the correct path
+import { useNavigate } from 'react-router-dom';
 
 const Entity = () => {
-  const [imageUrl, setImageUrl] = useState('');
+  const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [image, setImage] = useState(null);
-  const [products, setProducts] = useState([]);
+  const [imageFile, setImageFile] = useState(null);
 
-  // Handle image file change
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    setImage(file);
+    setImageFile(file);
   };
+  const handlenav=()=>{
+    navigate('/all')
+  }
 
-  // Fetch products from the backend
-  const fetchProducts = async () => {
-    try {
-      const response = await fetch("http://localhost:8080/products");
-      const data = await response.json();
-      if (response.ok) {
-        setProducts(data.pro);  // Assuming data.pro is the correct key for the product list
-      } else {
-        console.error('Failed to fetch products');
-      }
-    } catch (err) {
-      console.log('Error fetching products:', err);
-    }
-  };
-
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     const formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
-    formData.append('image', image);
+    formData.append('image', imageFile);
 
     try {
       const response = await fetch("http://localhost:8080/products", {
@@ -45,7 +33,8 @@ const Entity = () => {
       const data = await response.json();
       if (response.ok) {
         console.log('Product created:', data.savedProduct);
-        fetchProducts();  // Refresh product list after creation
+        alert('Entity created successfully');
+        navigate('/'); // Redirect to home or another page
       } else {
         console.error('Failed to create product');
       }
@@ -54,76 +43,80 @@ const Entity = () => {
     }
   };
 
-  // Fetch products when component mounts
-  useEffect(() => {
-    fetchProducts();
-  }, []);  // Only run once when the component mounts
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-50 to-purple-50">
-      <div className="bg-white p-8 rounded-xl shadow-xl max-w-lg w-full">
-        <h1 className="text-4xl font-extrabold text-center text-purple-600 mb-6">
-          Add Entity
-        </h1>
-        <form onSubmit={handleSubmit}>
-          <div className="space-y-4">
-            {/* Image Upload Input */}
-            <div>
-              <input
-                type="file"
-                onChange={handleFileChange}
-                className="w-full p-4 rounded-lg border-2 border-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
-              />
-            </div>
+    <div className="relative min-h-screen font-serif bg-gradient-to-br from-pink-50 to-purple-50">
+      <div className="absolute inset-0 opacity-20">
+        <img className="w-full h-full object-cover" src={image} alt="Background" />
+      </div>
 
-            {/* Title Input */}
-            <div>
+      <div className="flex items-center justify-center min-h-screen relative z-10">
+        <motion.div
+          className="w-full max-w-md bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl p-8"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+        >
+          <h2 className="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+            Add Entity
+          </h2>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-6">
+              <label htmlFor="title" className="block text-gray-700 text-lg mb-2">
+                Title
+              </label>
               <input
                 type="text"
-                placeholder="Enter Title"
+                id="title"
+                name="title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full p-4 rounded-lg border-2 border-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                placeholder="Enter title"
+                required
               />
             </div>
-
-            {/* Description Input */}
-            <div>
+            <div className="mb-6">
+              <label htmlFor="description" className="block text-gray-700 text-lg mb-2">
+                Description
+              </label>
               <input
                 type="text"
-                placeholder="Enter Description"
+                id="description"
+                name="description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="w-full p-4 rounded-lg border-2 border-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                placeholder="Enter description"
+                required
               />
             </div>
-
-            {/* Submit Button */}
-            <div>
-              <button
-                type="submit"
-                className="w-full py-3 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold text-lg hover:from-pink-600 hover:to-purple-600 transition-all hover:shadow-lg"
-              >
-                Submit
-              </button>
+            <div className="mb-8">
+              <label htmlFor="image" className="block text-gray-700 text-lg mb-2">
+                Image
+              </label>
+              <input
+                type="file"
+                id="image"
+                name="image"
+                onChange={handleFileChange}
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                required
+              />
             </div>
-          </div>
-        </form>
-
-        {/* Display the list of products */}
-        <div className="mt-8">
-          <h2 className="text-2xl font-bold text-center text-purple-600 mb-4">Products</h2>
-          <ul>
-            {products.map((product, index) => (
-              <li key={index} className="mb-4 p-4 bg-white shadow-md rounded-lg">
-                <img src={`http://localhost:8080/${product.image}`} alt={product.title} className="w-full h-72 object-cover mb-4" />
-                <h3 className="text-xl font-bold text-gray-800">{product.title}</h3>
-                <p className="text-gray-700">{product.description}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
+            <motion.button
+              type="submit"
+              className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold py-3 px-6 rounded-full hover:from-pink-600 hover:to-purple-600 transition-all hover:shadow-lg" onClick={handlenav}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Submit
+            </motion.button>
+          </form>
+        </motion.div>
       </div>
+      <footer className="text-center py-12 bg-gradient-to-r from-purple-600 to-pink-600 text-white absolute bottom-0 w-full">
+        <p className="text-lg">© 2025 Weird Fashion Trends. All rights reserved.</p>
+      </footer>
     </div>
   );
 };

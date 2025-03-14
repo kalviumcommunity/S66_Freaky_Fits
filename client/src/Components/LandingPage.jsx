@@ -1,31 +1,84 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import image from '../assets/image.png';
+import image from "../assets/image.png";
 
 export default function LandingPage() {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate("/signup");
+  };
+  const handleLogin = () => {
+    navigate("/login");
+  };
+  const handleEntity=()=>{
+    navigate('/add-entity')
+  }
+  const handleProducts=()=>{
+    navigate('/all')
+  }
 
   const [fashionTrends, setFashionTrends] = useState([]);
-  
+
   useEffect(() => {
-    fetch('http://localhost:8080/products')
-      .then(response => response.json())
-      .then(data => {
-        console.log(data.pro); // Log the data for debugging
-        setFashionTrends(data.pro); // Updated to use data.pro
+    fetch("http://localhost:8080/products")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.pro);
+        setFashionTrends(data.pro);
       })
-      .catch(error => console.error('Error fetching data:', error));
+      .catch((error) => console.error("Error fetching data:", error));
   }, []);
-  
 
   return (
     <div className="relative min-h-screen font-serif bg-gradient-to-br from-pink-50 to-purple-50">
-      {/* Background Image with Overlay */}
+      {/* Background Image */}
       <div className="absolute inset-0 opacity-20">
         <img className="w-full h-full object-cover" src={image} alt="Background" />
       </div>
 
-      {/* Header Section */}
-      <header className="text-center py-24 relative z-10">
+      {/* Navbar */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-sm shadow-md">
+        <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+          <motion.h1
+            className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            Freaky Fits
+          </motion.h1>
+          <div className="flex space-x-4">
+            <button
+              className="px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full hover:from-pink-600 hover:to-purple-600 transition-all hover:shadow-lg"
+              onClick={handleClick}
+            >
+              Signup
+            </button>
+            <button
+              className="px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full hover:from-pink-600 hover:to-purple-600 transition-all hover:shadow-lg"
+              onClick={handleLogin}
+            >
+              Login
+            </button>
+            <button
+              className="px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full hover:from-pink-600 hover:to-purple-600 transition-all hover:shadow-lg"
+              onClick={handleEntity}
+            >
+              Add-Entity
+            </button>
+            <button
+              className="px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full hover:from-pink-600 hover:to-purple-600 transition-all hover:shadow-lg"
+              onClick={handleProducts}
+            >
+              Products
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <header className="text-center pt-32 pb-24 relative z-10 h-150">
         <motion.h1
           className="text-8xl font-extrabold mb-6 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent drop-shadow-lg"
           initial={{ opacity: 0, y: -50 }}
@@ -97,7 +150,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Footer Section */}
+      {/* Footer */}
       <footer className="text-center py-12 bg-gradient-to-r from-purple-600 to-pink-600 text-white">
         <p className="text-lg">© 2025 Weird Fashion Trends. All rights reserved.</p>
       </footer>
