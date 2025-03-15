@@ -1,0 +1,15 @@
+meta {
+  name: GET2
+  type: http
+  seq: 10
+}
+
+get {
+  url: http://localhost:8080/user/products
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2N2Q0MzEwNTk0M2Q4Y2QwMWU4NTAxZDIiLCJlbWFpbCI6Imphbm5hdEBnbWFpbC5jb20iLCJpYXQiOjE3NDE5NjkwNzcsImV4cCI6MTc0MjU3Mzg3N30.BvV-NWMs2rncpaoeSPs-ZqmJlQGXnPu0FpLkq8UA61g
+}

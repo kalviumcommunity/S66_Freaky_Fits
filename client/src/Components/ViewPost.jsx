@@ -1,28 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import image from '../assets/image.png'; // Ensure you have the image asset
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { motion } from "framer-motion";
+import image from "../assets/image.png"; // Ensure you have the image asset
 
-const AllEntity = () => {
-  const [products, setProducts] = useState([]);
+const ViewPost = () => {
+  const [posts, setPosts] = useState([]);
+  const { id } = useParams(); // Get the user ID from the URL
 
-  const fetchProducts = async () => {
+  const fetchData = async () => {
     try {
-      const response = await fetch("http://localhost:8080/products");
+      const token = localStorage.getItem("Token");
+      const response = await fetch(`http://localhost:8080/users/${id}`);
       const data = await response.json();
-      if (response.ok) {
-        setProducts(data.pro);  
-        console.log(data.pro)
+
+      if (data) {
+        setPosts(data.posts); // Set posts data
+        console.log(data.posts);
       } else {
-        console.error('Failed to fetch products');
+        console.log("Error fetching posts");
       }
-    } catch (err) {
-      console.log('Error fetching products:', err);
+    } catch (error) {
+      console.log(error);
     }
   };
 
   useEffect(() => {
-    fetchProducts();
-  }, []); 
+    fetchData();
+  }, [id]); // Fetch data when the component mounts or userId changes
 
   return (
     <div className="relative min-h-screen font-serif bg-gradient-to-br from-pink-50 to-purple-50">
@@ -45,18 +49,20 @@ const AllEntity = () => {
         </div>
       </nav>
 
-      {/* Products Section */}
-      <section className="py-20 relative z-10">
-        <motion.h2
-          className="text-6xl font-bold text-center mb-16 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.6 }}
-        >
-          Products
-        </motion.h2>
+      {/* Posts Section */}
+      <section className="py-28 relative z-10">
+        {posts.length > 0 && (
+          <motion.h2
+            className="text-6xl font-bold text-center mb-16 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.6 }}
+          >
+            {posts[0].user.username}'s Posts {/* Get username from first post */}
+          </motion.h2>
+        )}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 px-10 lg:px-24">
-          {products.map((product, index) => (
+          {posts.map((post, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, scale: 0.9 }}
@@ -65,18 +71,19 @@ const AllEntity = () => {
               whileHover={{ scale: 1.05 }}
               className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all transform"
             >
-              <img src={product.image} alt={product.title} className="w-full h-72 object-cover" />
+              {/* Post Image */}
+              <img
+                src={post.image}
+                alt={post.title}
+                className="w-full h-72 object-cover"
+              />
+
+              {/* Post Details */}
               <div className="p-8">
-                <h3 className="text-3xl font-bold mb-4 text-gray-800">{product.title}</h3>
-                <p className="text-lg text-gray-700 mb-6">{product.description}</p>
-                <div className="flex items-center space-x-4 mb-6 w-full justify-center">
-                  <div className="w-10 h-10 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold text-sm m">
-                    {product.user.username.charAt(0).toUpperCase()} {/* First letter of the username */}
-                  </div>
-                  <p className="text-2xl text-gray-700 font-semibold">{product.user.username}</p>
-                </div>
+                <h3 className="text-3xl font-bold mb-4 text-gray-800">{post.title}</h3>
+                <p className="text-lg text-gray-700 mb-6">{post.description}</p>
                 <button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-pink-600 hover:to-purple-600 text-white font-semibold py-3 px-6 rounded-full w-full transition-all hover:shadow-lg">
-                  Learn More
+                  View Details
                 </button>
               </div>
             </motion.div>
@@ -90,6 +97,6 @@ const AllEntity = () => {
       </footer>
     </div>
   );
-}
+};
 
-export default AllEntity;
+export default ViewPost;

@@ -37,10 +37,17 @@ const Signup = () => {
         },
         body: JSON.stringify(input),
       });
+      if(response.ok){
       const result = await response.json();
+      localStorage.removeItem("Token");
+
       console.log(result); 
       alert("Signup successfully")
       navigate("/login")
+      }else{
+        const errorResult = await response.json();
+        alert(`Signup failed: ${errorResult.message || "Unknown error"}`);
+      }
     } catch (error) {
       console.error("Error signing up:", error);
     }

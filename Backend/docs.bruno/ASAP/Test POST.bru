@@ -6,6 +6,16 @@ meta {
 
 post {
   url: http://localhost:8080/products
-  body: none
-  auth: none
+  body: multipartForm
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2N2Q0MTY3YWQxNWIwYTA2ZThkYmYyZTgiLCJlbWFpbCI6InBwcEBnbWFpbC5jb20iLCJpYXQiOjE3NDE5NTQzMDIsImV4cCI6MTc0MjU1OTEwMn0.6ozdsQnF44_d1tk7GeS5qs-Lfeyhq3s08LtZ4tvh6oU
+}
+
+body:multipart-form {
+  title: ikikiki
+  description: mnbvcxz
+  image: @file(C:\Users\user\Pictures\Screenshots\Full Adder.png)
 }

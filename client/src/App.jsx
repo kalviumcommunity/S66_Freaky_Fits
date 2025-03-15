@@ -8,6 +8,8 @@ import Entity from './Components/entity'
 import Signup from './Components/Signup'
 import Login from './Components/LOGIN.JSX'
 import AllEntity from './Components/AllEntity'
+import AllUsers from './Components/AllUsers'
+import ViewPost from './Components/ViewPost'
 function App() {
   const [count, setCount] = useState(0)
 
@@ -19,6 +21,8 @@ function App() {
         <Route path="/signup" element={<Signup/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/all" element={<AllEntity/>}/>
+        <Route path="/allusers" element={<AllUsers/>}/>
+        <Route path="/viewpost/:id" element={<ViewPost/>}/>
       </Routes>
     </>
   )

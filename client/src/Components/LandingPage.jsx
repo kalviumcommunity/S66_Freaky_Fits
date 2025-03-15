@@ -17,18 +17,51 @@ export default function LandingPage() {
   const handleProducts=()=>{
     navigate('/all')
   }
+  const handleUsers=()=>{
+    navigate('/allusers')
+  }
+  const handleview=()=>{
+    navigate("/all")
+  }
 
-  const [fashionTrends, setFashionTrends] = useState([]);
-
-  useEffect(() => {
-    fetch("http://localhost:8080/products")
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data.pro);
-        setFashionTrends(data.pro);
-      })
-      .catch((error) => console.error("Error fetching data:", error));
-  }, []);
+  const websiteData = [
+    {
+      title: "Explore the Quirky World of Fashion",
+      description:
+        "Welcome to Freaky Fits! Dive into the world of outrageous fashion, where creativity knows no bounds. Our platform celebrates bold, eccentric, and totally unique fashion choices.",
+      image: "https://imgk.timesnownews.com/story/Weird_Fashion_Trends.png",
+    },
+    {
+      title: "Create Your Own Outrageous Looks",
+      description:
+        "Not just a place to explore—it's also a space for YOU to unleash your creativity. Upload your wildest fashion designs and share them with a community that loves to be bold and different!",
+      image: "https://i.pinimg.com/474x/b0/6b/bc/b06bbc50f30b91a30d9a795ceb2a8571.jpg",
+    },
+    {
+      title: "Join a Trendsetting Community",
+      description:
+        "Get inspired by others and be part of a community that thrives on standing out. Share your fits, vote on the most unconventional looks, and make your mark on the fashion world!",
+      image: "https://so-sew-easy.com/wp-content/uploads/2016/07/shutterstock_38581672-2.jpg",
+    },
+    {
+      title: "Get Inspired by the Boldest Designers",
+      description:
+        "From avant-garde designers to everyday fashion rebels, get inspired by those who refuse to conform. Discover eccentric collections and outfits that break the rules.",
+      image: "https://imageio.forbes.com/specials-images/dam/imageserve/921610542/0x0.jpg?format=jpg&height=900&width=1600&fit=bounds",
+    },
+    {
+      title: "Fashion From the Streets",
+      description:
+        "Street fashion is all about individuality and authenticity. Explore the latest trends from the streets of the world's most fashionable cities, where style knows no limits.",
+      image: "https://media.istockphoto.com/id/1005864440/photo/eccentric-young-woman-posing-for-a-portrait.jpg?s=612x612&w=0&k=20&c=WUsNvYBkhRKOuMWNtbHQi_0g_25K4BGheF3HZ1gGcOQ=",
+    },
+    {
+      title: "Unconventional Accessories",
+      description:
+        "Accessories that push the boundaries of creativity. From bold hats to statement jewelry, discover accessories that challenge the norms of traditional fashion.",
+      image: "https://i1142.photobucket.com/albums/n612/chicityfashion/2013/MargielaMasks.jpg",
+    },
+  ];
 
   return (
     <div className="relative min-h-screen font-serif bg-gradient-to-br from-pink-50 to-purple-50">
@@ -72,6 +105,12 @@ export default function LandingPage() {
               onClick={handleProducts}
             >
               Products
+            </button>
+            <button
+              className="px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full hover:from-pink-600 hover:to-purple-600 transition-all hover:shadow-lg"
+              onClick={handleUsers}
+            >
+              All Users
             </button>
           </div>
         </div>
@@ -125,10 +164,10 @@ export default function LandingPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.6 }}
         >
-          Featured Trends
+          What makes it unique?
         </motion.h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 px-10 lg:px-24">
-          {fashionTrends.map((trend, index) => (
+          {websiteData.map((trend, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, scale: 0.9 }}
@@ -141,8 +180,8 @@ export default function LandingPage() {
               <div className="p-8">
                 <h3 className="text-3xl font-bold mb-4 text-gray-800">{trend.title}</h3>
                 <p className="text-lg text-gray-700 mb-6">{trend.description}</p>
-                <button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-pink-600 hover:to-purple-600 text-white font-semibold py-3 px-6 rounded-full w-full transition-all hover:shadow-lg">
-                  Learn More
+                <button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-pink-600 hover:to-purple-600 text-white font-semibold py-3 px-6 rounded-full w-full transition-all hover:shadow-lg" onClick={handleview}>
+                  View Trends
                 </button>
               </div>
             </motion.div>
