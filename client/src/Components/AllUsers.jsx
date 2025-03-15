@@ -1,28 +1,35 @@
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import image from '../assets/image.png'; // Ensure you have the image asset
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import image from "../assets/image.png"; // Ensure you have the image asset
+import { useNavigate } from "react-router-dom";
 
-const AllEntity = () => {
-  const [products, setProducts] = useState([]);
+const AllUsers = () => {
+  const [users, setUsers] = useState([]);
+  const navigate=useNavigate()
 
-  const fetchProducts = async () => {
+  const fetchData = async () => {
     try {
-      const response = await fetch("http://localhost:8080/products");
+      const response = await fetch("http://localhost:8080/users");
       const data = await response.json();
-      if (response.ok) {
-        setProducts(data.pro);  
-        console.log(data.pro)
+      if (data) {
+        setUsers(data.users);
+        console.log(data.users);
       } else {
-        console.error('Failed to fetch products');
+        console.log("Error fetching users");
       }
-    } catch (err) {
-      console.log('Error fetching products:', err);
+    } catch (error) {
+      console.log(error);
     }
   };
 
   useEffect(() => {
-    fetchProducts();
-  }, []); 
+    fetchData();
+  }, []);
+
+  const handleview=(id)=>{
+    navigate(`/viewpost/${id}`)
+
+  }
 
   return (
     <div className="relative min-h-screen font-serif bg-gradient-to-br from-pink-50 to-purple-50">
@@ -45,18 +52,18 @@ const AllEntity = () => {
         </div>
       </nav>
 
-      {/* Products Section */}
-      <section className="py-20 relative z-10">
+      {/* Users Section */}
+      <section className="py-28 relative z-10">
         <motion.h2
           className="text-6xl font-bold text-center mb-16 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.6 }}
         >
-          Products
+          All Users
         </motion.h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 px-10 lg:px-24">
-          {products.map((product, index) => (
+          {users.map((user, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, scale: 0.9 }}
@@ -65,18 +72,19 @@ const AllEntity = () => {
               whileHover={{ scale: 1.05 }}
               className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all transform"
             >
-              <img src={product.image} alt={product.title} className="w-full h-72 object-cover" />
+              {/* User Avatar */}
+              <div className="w-full h-72 bg-gradient-to-r from-purple-600 to-pink-600 flex items-center justify-center">
+                <span className="text-8xl font-bold text-white">
+                  {user.username.charAt(0).toUpperCase()}
+                </span>
+              </div>
+
+              {/* User Details */}
               <div className="p-8">
-                <h3 className="text-3xl font-bold mb-4 text-gray-800">{product.title}</h3>
-                <p className="text-lg text-gray-700 mb-6">{product.description}</p>
-                <div className="flex items-center space-x-4 mb-6 w-full justify-center">
-                  <div className="w-10 h-10 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold text-sm m">
-                    {product.user.username.charAt(0).toUpperCase()} {/* First letter of the username */}
-                  </div>
-                  <p className="text-2xl text-gray-700 font-semibold">{product.user.username}</p>
-                </div>
-                <button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-pink-600 hover:to-purple-600 text-white font-semibold py-3 px-6 rounded-full w-full transition-all hover:shadow-lg">
-                  Learn More
+                <h3 className="text-3xl font-bold mb-4 text-gray-800">{user.username}</h3>
+                <p className="text-lg text-gray-700 mb-6">{user.email}</p>
+                <button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-pink-600 hover:to-purple-600 text-white font-semibold py-3 px-6 rounded-full w-full transition-all hover:shadow-lg" onClick={()=>handleview(user._id)}>
+                  View Posts
                 </button>
               </div>
             </motion.div>
@@ -90,6 +98,6 @@ const AllEntity = () => {
       </footer>
     </div>
   );
-}
+};
 
-export default AllEntity;
+export default AllUsers;

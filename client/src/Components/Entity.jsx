@@ -26,15 +26,23 @@ const Entity = () => {
     formData.append('image', imageFile);
 
     try {
+      const token=localStorage.getItem("Token")
+      console.log(token)
+      if(!token){
+        alert("First, Login Please")
+      }
       const response = await fetch("http://localhost:8080/products", {
         method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`, 
+        },
         body: formData,
       });
       const data = await response.json();
       if (response.ok) {
         console.log('Product created:', data.savedProduct);
         alert('Entity created successfully');
-        navigate('/'); // Redirect to home or another page
+        navigate('/'); 
       } else {
         console.error('Failed to create product');
       }

@@ -25,6 +25,10 @@ const Login = () => {
       });
       const data = await response.json();
       console.log("API response:", data);
+      console.log(data.token);
+      if(data.token){
+        localStorage.setItem("Token",data.token)
+      }
       if (data.success) {
         navigate("/");
       } else {
