@@ -37,10 +37,10 @@ proRouter.post('/products', authenticate, upload.single('image'), async (req, re
         // Save the product
         const savedProduct = await newProduct.save();
 
-        // Find the user by ID
+        
         const user = await User.findById(userId);  
         
-        // Push only the product ID (savedProduct._id) to the user's products array
+        
         user.products.push(savedProduct._id); 
         
         console.log(user.products); // For debugging: print user's products array
