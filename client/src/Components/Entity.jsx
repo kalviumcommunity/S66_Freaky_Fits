@@ -47,7 +47,7 @@ const handleSubmit = async (e) => {
     if (response.ok) {
       console.log('Product created:', data.savedProduct);
       alert('Entity created successfully');
-      navigate('/');
+      navigate('/all');
     } else {
       console.error('Failed to create product:', data.message);
     }

@@ -1,15 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, } from 'react';
 import { motion } from 'framer-motion';
 import image from '../assets/image.png'; 
+import { useNavigate } from 'react-router-dom';
 
 const AllEntity = () => {
+  const navigate=useNavigate()
   const [products, setProducts] = useState([]);
+   const [loading, setLoading] = useState(true);
 
   const fetchProducts = async () => {
+    setLoading(true);
     try {
       const response = await fetch("http://localhost:8080/products");
       const data = await response.json();
       if (response.ok) {
+        setLoading(false)
         setProducts(data.pro);  
         console.log(data.pro)
       } else {
@@ -23,6 +28,23 @@ const AllEntity = () => {
   useEffect(() => {
     fetchProducts();
   }, []); 
+
+  const handleDelete=async(id)=>{
+    try{
+      const response=await fetch(`http://localhost:8080/products/${id}`,{
+        method:'DELETE',
+      })
+      if(response.ok){
+        alert('Deleted Successfully')
+        setProducts(prev => prev.filter(product => product._id !== id));
+      }else {
+      console.error("Failed to delete product");
+    }
+
+    } catch (err) {
+      console.log('Error fetching products:', err);
+    }
+  }
 
   return (
     <div className="relative min-h-screen font-serif bg-gradient-to-br from-pink-50 to-purple-50">
@@ -54,7 +76,15 @@ const AllEntity = () => {
         >
           Products
         </motion.h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 px-10 lg:px-24">
+          {loading?(          <div className="flex justify-center items-center h-64">
+            <motion.div
+              className="w-16 h-16 border-4 border-purple-400 border-t-transparent rounded-full animate-spin"
+              initial={{ rotate: 0 }}
+              animate={{ rotate: 360 }}
+              transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+            />
+          </div>
+):(<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 px-10 lg:px-24">
           {products.map((product, index) => (
             <motion.div
               key={index}
@@ -75,16 +105,17 @@ const AllEntity = () => {
                   <p className="text-2xl text-gray-700 font-semibold">{product.user.username}</p>
                 </div>
 
-                <button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-pink-600 hover:to-purple-600 text-white font-semibold py-3 px-6 rounded-full w-full transition-all hover:shadow-lg mb-2">
+                <button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-pink-600 hover:to-purple-600 text-white font-semibold py-3 px-6 rounded-full w-full transition-all hover:shadow-lg mb-2 cursor-pointer" onClick={() => navigate(`/edit/${product._id}`)}>
                   Edit
                 </button>
-                <button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-pink-600 hover:to-purple-600 text-white font-semibold py-3 px-6 rounded-full w-full transition-all hover:shadow-lg">
+                <button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-pink-600 hover:to-purple-600 text-white font-semibold py-3 px-6 rounded-full w-full transition-all hover:shadow-lg cursor-pointer"  onClick={() => handleDelete(product._id)}>
                   Delete
                 </button>
               </div>
             </motion.div>
           ))}
-        </div>
+        </div>)}
+        
       </section>
 
       {/* Footer */}
