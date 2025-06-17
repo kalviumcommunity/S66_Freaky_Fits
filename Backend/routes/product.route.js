@@ -7,7 +7,7 @@ const User=require("../models/schema")
 
 
 
-// GET: Retrieve all products
+
 proRouter.get('/products', async (req, res) => {
     try {
         const pro = await Products.find().populate('user');
@@ -17,12 +17,12 @@ proRouter.get('/products', async (req, res) => {
     }
 });
 
-// POST: Create a new product
-proRouter.post('/products', authenticate, upload.single('image'), async (req, res) => {
-    const { title, description } = req.body;
-    const userId = req.user.userID;  // Access userID from req.user
 
-    // Log for debugging purposes
+proRouter.post('/products', authenticate, async (req, res) => {
+    const { title, description,image } = req.body;
+    const userId = req.user.userID;  
+
+
     console.log('Request Body in POST /products:', req.body);
     console.log('UserID extracted from authenticate middleware:', userId);
 
@@ -30,11 +30,10 @@ proRouter.post('/products', authenticate, upload.single('image'), async (req, re
         const newProduct = new Products({
             title,
             description,
-            image: req.file ? req.file.path : '', // Handle image upload
-            user: userId  // Assign the userId to the product
+            image,
+            user: userId 
         });
 
-        // Save the product
         const savedProduct = await newProduct.save();
 
         
@@ -43,12 +42,12 @@ proRouter.post('/products', authenticate, upload.single('image'), async (req, re
         
         user.products.push(savedProduct._id); 
         
-        console.log(user.products); // For debugging: print user's products array
+        console.log(user.products); 
         
-        // Save the updated user with the new product reference
+        
         await user.save();
         
-        // Send the success response
+        
         res.status(201).json({
             message: "Product created successfully",
             savedProduct
@@ -59,7 +58,7 @@ proRouter.post('/products', authenticate, upload.single('image'), async (req, re
     }
 });
 
-// PUT: Update an existing product
+
 proRouter.put('/products/:id', async (req, res) => {
     try {
         const updatedProduct = await Products.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -69,7 +68,7 @@ proRouter.put('/products/:id', async (req, res) => {
     }
 });
 
-// DELETE: Delete an existing product
+
 proRouter.delete('/products/:id', async (req, res) => {
     try {
         await Products.findByIdAndDelete(req.params.id);
@@ -80,10 +79,10 @@ proRouter.delete('/products/:id', async (req, res) => {
 });
 proRouter.delete('/deleteAllProducts', async (req, res) => {
     try {
-        const result = await Products.deleteMany({});  // Empty filter deletes all documents
+        const result = await Products.deleteMany({});  
         res.status(200).json({
             message: "All products deleted successfully",
-            deletedCount: result.deletedCount  // Shows how many users were deleted
+            deletedCount: result.deletedCount  
         });
     } catch (error) {
         console.error(error);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import image from '../assets/image.png'; // Ensure you have the image asset
+import image from '../assets/image.png'; 
 
 const AllEntity = () => {
   const [products, setProducts] = useState([]);
@@ -26,7 +26,6 @@ const AllEntity = () => {
 
   return (
     <div className="relative min-h-screen font-serif bg-gradient-to-br from-pink-50 to-purple-50">
-      {/* Background Image */}
       <div className="absolute inset-0 opacity-20">
         <img className="w-full h-full object-cover" src={image} alt="Background" />
       </div>
@@ -75,8 +74,12 @@ const AllEntity = () => {
                   </div>
                   <p className="text-2xl text-gray-700 font-semibold">{product.user.username}</p>
                 </div>
+
+                <button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-pink-600 hover:to-purple-600 text-white font-semibold py-3 px-6 rounded-full w-full transition-all hover:shadow-lg mb-2">
+                  Edit
+                </button>
                 <button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-pink-600 hover:to-purple-600 text-white font-semibold py-3 px-6 rounded-full w-full transition-all hover:shadow-lg">
-                  Learn More
+                  Delete
                 </button>
               </div>
             </motion.div>
