@@ -11,7 +11,7 @@ const AllUsers = () => {
   const fetchData = async () => {
     setLoading(true)
     try {
-      const response = await fetch("http://localhost:8080/users");
+      const response = await fetch("https://s66-freaky-fits-1.onrender.com/users");
       const data = await response.json();
       if (data) {
         setLoading(false)

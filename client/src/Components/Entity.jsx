@@ -33,7 +33,7 @@ const handleSubmit = async (e) => {
       return;
     }
 
-    const response = await fetch("http://localhost:8080/products", {
+    const response = await fetch("https://s66-freaky-fits-1.onrender.com/products", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

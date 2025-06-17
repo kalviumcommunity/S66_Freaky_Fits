@@ -30,7 +30,7 @@ const Signup = () => {
   
 
     try {
-      const response = await fetch("http://localhost:8080/user", {
+      const response = await fetch("https://s66-freaky-fits-1.onrender.com/user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
