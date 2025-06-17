@@ -7,49 +7,55 @@ const Entity = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [imageFile, setImageFile] = useState(null);
+  const [image, setImage] = useState(null);
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setImageFile(file);
-  };
+  // const handleFileChange = (e) => {
+  //   const file = e.target.files[0];
+  //   setImageFile(file);
+  // };
   const handlenav=()=>{
     navigate('/all')
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    const formData = new FormData();
-    formData.append('title', title);
-    formData.append('description', description);
-    formData.append('image', imageFile);
-
-    try {
-      const token=localStorage.getItem("Token")
-      console.log(token)
-      if(!token){
-        alert("First, Login Please")
-      }
-      const response = await fetch("http://localhost:8080/products", {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`, 
-        },
-        body: formData,
-      });
-      const data = await response.json();
-      if (response.ok) {
-        console.log('Product created:', data.savedProduct);
-        alert('Entity created successfully');
-        navigate('/'); 
-      } else {
-        console.error('Failed to create product');
-      }
-    } catch (err) {
-      console.log('Error submitting the form:', err);
-    }
+  const payload = {
+    title,
+    description,
+    image, 
   };
+
+  try {
+    const token = localStorage.getItem("Token");
+    if (!token) {
+      alert("First, Login Please");
+      return;
+    }
+
+    const response = await fetch("http://localhost:8080/products", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      console.log('Product created:', data.savedProduct);
+      alert('Entity created successfully');
+      navigate('/');
+    } else {
+      console.error('Failed to create product:', data.message);
+    }
+  } catch (err) {
+    console.log('Error submitting the form:', err);
+  }
+};
+
 
   return (
     <div className="relative min-h-screen font-serif bg-gradient-to-br from-pink-50 to-purple-50">
@@ -98,16 +104,18 @@ const Entity = () => {
                 required
               />
             </div>
-            <div className="mb-8">
-              <label htmlFor="image" className="block text-gray-700 text-lg mb-2">
+             <div className="mb-6">
+              <label htmlFor="description" className="block text-gray-700 text-lg mb-2">
                 Image
               </label>
               <input
-                type="file"
-                id="image"
-                name="image"
-                onChange={handleFileChange}
+                  type="text"
+                  id="image"
+                  name="image"
+                  value={image}
+                  onChange={(e) => setImage(e.target.value)}
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                placeholder="Enter Image Url"
                 required
               />
             </div>
