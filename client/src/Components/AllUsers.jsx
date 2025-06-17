@@ -6,12 +6,15 @@ import { useNavigate } from "react-router-dom";
 const AllUsers = () => {
   const [users, setUsers] = useState([]);
   const navigate=useNavigate()
+  const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
+    setLoading(true)
     try {
       const response = await fetch("http://localhost:8080/users");
       const data = await response.json();
       if (data) {
+        setLoading(false)
         setUsers(data.users);
         console.log(data.users);
       } else {
@@ -62,7 +65,14 @@ const AllUsers = () => {
         >
           All Users
         </motion.h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 px-10 lg:px-24">
+        {loading?(<div className="flex justify-center items-center h-64">
+                    <motion.div
+                      className="w-16 h-16 border-4 border-purple-400 border-t-transparent rounded-full animate-spin"
+                      initial={{ rotate: 0 }}
+                      animate={{ rotate: 360 }}
+                      transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+                    />
+                  </div>):(<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 px-10 lg:px-24">
           {users.map((user, index) => (
             <motion.div
               key={index}
@@ -83,13 +93,14 @@ const AllUsers = () => {
               <div className="p-8">
                 <h3 className="text-3xl font-bold mb-4 text-gray-800">{user.username}</h3>
                 <p className="text-lg text-gray-700 mb-6">{user.email}</p>
-                <button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-pink-600 hover:to-purple-600 text-white font-semibold py-3 px-6 rounded-full w-full transition-all hover:shadow-lg" onClick={()=>handleview(user._id)}>
+                <button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-pink-600 hover:to-purple-600 text-white font-semibold py-3 px-6 rounded-full w-full transition-all hover:shadow-lg cursor-pointer" onClick={()=>handleview(user._id)}>
                   View Posts
                 </button>
               </div>
             </motion.div>
           ))}
-        </div>
+        </div>)}
+        
       </section>
 
       {/* Footer */}

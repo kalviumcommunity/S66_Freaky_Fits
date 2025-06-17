@@ -82,9 +82,7 @@ const ViewPost = () => {
               <div className="p-8">
                 <h3 className="text-3xl font-bold mb-4 text-gray-800">{post.title}</h3>
                 <p className="text-lg text-gray-700 mb-6">{post.description}</p>
-                <button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-pink-600 hover:to-purple-600 text-white font-semibold py-3 px-6 rounded-full w-full transition-all hover:shadow-lg">
-                  View Details
-                </button>
+          
               </div>
             </motion.div>
           ))}
