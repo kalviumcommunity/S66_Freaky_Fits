@@ -11,7 +11,7 @@ const EditProduct = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/products`);
+        const response = await fetch(`hhttps://s66-freaky-fits-1.onrender.com/products`);
         const data = await response.json();
         const product = data.pro.find(p => p._id === id);
         if (product) {
@@ -36,7 +36,7 @@ const EditProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:8080/products/${id}`, {
+      const response = await fetch(`https://s66-freaky-fits-1.onrender.com/products/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

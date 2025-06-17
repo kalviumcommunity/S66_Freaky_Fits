@@ -11,7 +11,7 @@ const AllEntity = () => {
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:8080/products");
+      const response = await fetch("https://s66-freaky-fits-1.onrender.com/products");
       const data = await response.json();
       if (response.ok) {
         setLoading(false)
@@ -31,7 +31,7 @@ const AllEntity = () => {
 
   const handleDelete=async(id)=>{
     try{
-      const response=await fetch(`http://localhost:8080/products/${id}`,{
+      const response=await fetch(`https://s66-freaky-fits-1.onrender.com/products/${id}`,{
         method:'DELETE',
       })
       if(response.ok){

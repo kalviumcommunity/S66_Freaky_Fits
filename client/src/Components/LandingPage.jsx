@@ -96,6 +96,16 @@ export default function LandingPage() {
             </button>
             <button
               className="px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full hover:from-pink-600 hover:to-purple-600 transition-all hover:shadow-lg"
+              onClick={() => {
+    localStorage.removeItem("Token");
+    alert("You have been logged out!");
+    navigate("/");
+  }}
+            >
+              Logout
+            </button>
+            <button
+              className="px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full hover:from-pink-600 hover:to-purple-600 transition-all hover:shadow-lg"
               onClick={handleEntity}
             >
               Add-Entity

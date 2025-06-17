@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import image from "../assets/image.png"; // Ensure you have the image asset
+import image from "../assets/image.png"; 
 
 const ViewPost = () => {
   const [posts, setPosts] = useState([]);
-  const { id } = useParams(); // Get the user ID from the URL
+  const { id } = useParams(); 
 
   const fetchData = async () => {
     try {
-      const token = localStorage.getItem("Token");
-      const response = await fetch(`http://localhost:8080/users/${id}`);
+      // const token = localStorage.getItem("Token");
+      const response = await fetch(`https://s66-freaky-fits-1.onrender.com/users/${id}`);
       const data = await response.json();
 
       if (data) {
-        setPosts(data.posts); // Set posts data
+        setPosts(data.posts); 
         console.log(data.posts);
       } else {
         console.log("Error fetching posts");
@@ -26,7 +26,7 @@ const ViewPost = () => {
 
   useEffect(() => {
     fetchData();
-  }, [id]); // Fetch data when the component mounts or userId changes
+  }, [id]); 
 
   return (
     <div className="relative min-h-screen font-serif bg-gradient-to-br from-pink-50 to-purple-50">
